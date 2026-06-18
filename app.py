@@ -78,24 +78,24 @@ def tinh_thue_tncn(gross, bonus, overtime, lunch, other, deps):
     temp_income = assessable_income
     previous_limit = 0
     tax_breakdown = []
-    for b in brackets:
-range_size = b["limit"] - previous_limit
-        if temp_income > 0:
-            taxable_in_bracket = min(temp_income, range_size)
-            tax_in_bracket = taxable_in_bracket * b["rate"]
-            tax += tax_in_bracket
-            
-            tax_breakdown.append({
-                "Bậc thuế": b["desc"],
-                "Thu nhập tính thuế ở bậc này": f"{taxable_in_bracket:,.0f} VND",
-                "Tiền thuế phải nộp": f"{tax_in_bracket:,.0f} VND"
-            })
-            
-            temp_income -= taxable_in_bracket
-            previous_limit = b["limit"]
-        else:
-            break
+   for b in brackets:
+    range_size = b["limit"] - previous_limit
 
+    if temp_income > 0:
+        taxable_in_bracket = min(temp_income, range_size)
+        tax_in_bracket = taxable_in_bracket * b["rate"]
+        tax += tax_in_bracket
+
+        tax_breakdown.append({
+            "Bậc thuế": b["desc"],
+            "Thu nhập tính thuế ở bậc này": f"{taxable_in_bracket:,.0f} VND",
+            "Tiền thuế phải nộp": f"{tax_in_bracket:,.0f} VND"
+        })
+
+        temp_income -= taxable_in_bracket
+        previous_limit = b["limit"]
+    else:
+        break
     net_salary = total_income - total_insurance - tax
     
     return {
